@@ -15,7 +15,19 @@ const server = http.createServer((req, res) => {
         })
     } 
     else if(req.url ==='/styles.css'){
-        
+        fs.readFile('styles.css', 'utf8', (err,cssContent)=>{
+            if (err){
+                res.statusCode = 500;
+                res.end('Internal Server Error')
+                return
+            }
+        })
+        res.setHeader('Content-Type', 'text/css')
+        res.end(cssContent)
+    }
+    else {
+        res.statusCode=500
+        res.end('Not Found')
     }
 })
 
